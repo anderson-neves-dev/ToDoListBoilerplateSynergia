@@ -101,32 +101,34 @@ const ExampleListController = () => {
 
 	const onAddItemClick = () => {
 		exampleApi.fillDatabae(10, (error, result) => {
-			if(error) return showNotification({
-				type: 'error',
-				title: "Não foi possível adicionar os itens",
-				message: `Erro: ${error}` 
-			});
+			if (error)
+				return showNotification({
+					type: 'error',
+					title: 'Não foi possível adicionar os itens',
+					message: `Erro: ${error}`
+				});
 			showNotification({
 				type: 'success',
-				title: "Itens adicionados com sucesso",
-				message: `Foram adicionados os seguintes itens: ${result.map(item => item).join(', ')}`
-			})
+				title: 'Itens adicionados com sucesso',
+				message: `Foram adicionados os seguintes itens: ${result.map((item) => item).join(', ')}`
+			});
 		});
 	};
 
 	const onEditTasksClick = () => {
-		exampleApi.editTasks("Teste", (error) => {
-			if(error) return showNotification({
-				type: 'error',
-				title: "Não foi possível editar as tarefas",
-				message: `Erro: ${error}`
-			});
+		exampleApi.editTasks('Teste', (error) => {
+			if (error)
+				return showNotification({
+					type: 'error',
+					title: 'Não foi possível editar as tarefas',
+					message: `Erro: ${error}`
+				});
 			showNotification({
 				type: 'success',
-				title: "Tarefas editadas com sucesso",
-				message: "Todas as tarefas foram editadas com sucesso"
-			})
-		})
+				title: 'Tarefas editadas com sucesso',
+				message: 'Todas as tarefas foram editadas com sucesso'
+			});
+		});
 	};
 
 	const providerValues: IExampleListContollerContext = useMemo(
@@ -143,7 +145,7 @@ const ExampleListController = () => {
 		}),
 		[examples, loading]
 	);
-
+	console.log({ examples });
 	return (
 		<ExampleListControllerContext.Provider value={providerValues}>
 			<ExampleListView />

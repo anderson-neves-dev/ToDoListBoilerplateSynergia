@@ -4,19 +4,19 @@ import { IRoute } from '/imports/modules/modulesTypings';
 
 export const aniversarioRouterList: (IRoute | null)[] = [
 	{
-		path: '/aniversario/:screenState/:aniversarioId',
+		path: '/aniversarios/:screenState/:aniversarioId',
 		component: AniversarioContainer,
 		isProtected: true,
 		resources: [Recurso.ANIVERSARIO_VIEW]
 	},
 	{
-		path: '/aniversario/:screenState',
+		path: '/aniversarios/:screenState',
 		component: AniversarioContainer,
 		isProtected: true,
 		resources: [Recurso.ANIVERSARIO_CREATE]
 	},
 	{
-		path: '/aniversario',
+		path: '/aniversarios',
 		component: AniversarioContainer,
 		isProtected: true,
 		resources: [Recurso.ANIVERSARIO_VIEW]

@@ -39,14 +39,10 @@ const ExampleListView = () => {
 					placeholder="Selecionar"
 					onChange={controller.onChangeCategory}
 				/>
-				<IconButton
-					onClick={controller.onAddItemClick}
-				>
+				<IconButton onClick={controller.onAddItemClick}>
 					<SysIcon name={'add'} />
 				</IconButton>
-				<IconButton
-					onClick={controller.onEditTasksClick}
-				>
+				<IconButton onClick={controller.onEditTasksClick}>
 					<SysIcon name={'edit'} />
 				</IconButton>
 			</SearchContainer>

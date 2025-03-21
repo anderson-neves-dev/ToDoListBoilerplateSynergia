@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { sysSizing } from '../../../ui/materialui/styles';
+import sysLightPalette from '/imports/ui/materialui/sysColors';
 
 interface ISignInStyles {
 	Container: React.ElementType;
@@ -13,48 +14,31 @@ interface ISignInStyles {
 
 const SignInStyles: ISignInStyles = {
 	Container: styled(Box)(({ theme }) => ({
-		minHeight: '100vh',
 		width: '100%',
-		backgroundColor: theme.palette.primary.main,
-		color: theme.palette.primary.contrastText,
-		position: 'relative',
-
-		[theme.breakpoints.up('md')]: {
-			backgroundImage: 'url(/images/wireframe/background-synergia.svg)',
-			backgroundSize: 'cover',
-			backgroundPosition: 'right'
-		}
+		height: '100vh',
+		backgroundColor: sysLightPalette.primary?.main,
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center'
 	})),
 	Content: styled(Box)(({ theme }) => ({
 		width: '100%',
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'space-evenly',
 		alignItems: 'center',
-		gap: theme.spacing(6),
-		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
-
-		[theme.breakpoints.up('md')]: {
-			width: 'auto',
-			height: 'auto',
-			position: 'absolute',
-			top: '50%',
-			left: '10%',
-			transform: 'translateY(-50%)'
-		}
+		justifyContent: 'center'
 	})),
 	FormContainer: styled(Paper)(({ theme }) => ({
-		width: '100%',
+		gap: theme.spacing(4),
+
 		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
-		borderRadius: sysSizing.radiusLg,
-		boxShadow: theme.shadows[3],
-		gap: sysSizing.spacingFixedXl,
+		background: 'linear-gradient(260deg,#00FFC9 0%, #04C4E8 49%,#069EFC 95%)',
+		boxShadow: '10px 8px 20px 5px rgba(0, 0, 0, 0.25)',
+		borderRadius: '28px',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'flex-start',
-		alignItems: 'center',
-		maxWidth: '400px'
+		textAlign: 'center'
 	})),
 	FormWrapper: styled(Box)(({ theme }) => ({
 		width: '100%',
@@ -62,7 +46,8 @@ const SignInStyles: ISignInStyles = {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		gap: theme.spacing(2)
+		gap: theme.spacing(2),
+		color: 'white'
 	}))
 };
 
