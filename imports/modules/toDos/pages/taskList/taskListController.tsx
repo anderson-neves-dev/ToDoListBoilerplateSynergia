@@ -5,9 +5,10 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { ISchema } from '/imports/typings/ISchema';
 import { ITask } from '../../api/taskSch';
 import { taskApi } from '../../api/taskApi';
-import TaskListView from './taskListView';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 import { IMeteorError } from '/imports/typings/IMeteorError';
+import Home from '/imports/sysPages/pages/home/home';
+import { orderBy } from 'lodash';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -21,8 +22,10 @@ interface ITaskListContollerContext {
 	onDeleteButtonClick: (row: any) => void;
 	tasksConcluidas: ITask[];
 	tasksNaoConcluidas: ITask[];
+	tasksRecent: ITask[];
 	schema: ISchema<any>;
 	loading: boolean;
+	loadingTaskRecente: boolean;
 	onChangeTextField: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChangeCategory: (event: string) => void;
 	onAddItemClick: () => void;
@@ -40,7 +43,11 @@ const initialConfig = {
 	viewComplexTable: false
 };
 
-const TaskListController = () => {
+interface TaskListControllerProps {
+	children: React.ReactNode;
+}
+
+const TaskListController: React.FC<TaskListControllerProps> = ({ children }) => {
 	const [config, setConfig] = React.useState<IInitialConfig>(initialConfig);
 	const { showNotification } = useContext(AppLayoutContext);
 
@@ -64,6 +71,17 @@ const TaskListController = () => {
 			tasksNaoConcluidas,
 			loading: !!subHandle && !subHandle.ready(),
 			total: subHandle ? subHandle.total : tasksNaoConcluidas.length + tasksConcluidas.length
+		};
+	}, [config]);
+
+	const { loadingTaskRecente, tasksRecent } = useTracker(() => {
+		const subHandle = taskApi.subscribe('taskList');
+
+		const tasksRecent = subHandle?.ready() ? taskApi.find({}, { sort: { createdat: -1 }, limit: 5 }).fetch() : [];
+		return {
+			tasksRecent,
+
+			loading: !!subHandle && !subHandle.ready()
 		};
 	}, [config]);
 
@@ -141,6 +159,7 @@ const TaskListController = () => {
 		() => ({
 			onAddButtonClick,
 			onDeleteButtonClick,
+			tasksRecent,
 			tasksConcluidas,
 			tasksNaoConcluidas,
 			schema: taskSchReduzido,
@@ -150,14 +169,10 @@ const TaskListController = () => {
 			onAddItemClick,
 			onCheckTask
 		}),
-		[tasksConcluidas, loading]
+		[tasksConcluidas, tasksRecent, loading]
 	);
 
-	return (
-		<TaskListControllerContext.Provider value={providerValues}>
-			<TaskListView />
-		</TaskListControllerContext.Provider>
-	);
+	return <TaskListControllerContext.Provider value={providerValues}>{children}</TaskListControllerContext.Provider>;
 };
 
 export default TaskListController;

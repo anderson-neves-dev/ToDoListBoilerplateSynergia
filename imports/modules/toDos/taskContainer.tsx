@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { hasValue } from '/imports/libs/hasValue';
 import TaskListController from './pages/taskList/taskListController';
 import TaskDetailController from './pages/taskDetail/taskDetailContoller';
+import { TaskListView } from './pages/taskList/taskListView';
 
 export interface ITaskModuleContext {
 	state?: 'create' | 'view' | 'edit';
@@ -22,7 +23,7 @@ export default (props: IDefaultContainerProps) => {
 	const isValideState = hasValue(state) && validState.includes(state!);
 
 	const renderPage = useCallback(() => {
-		if (!isValideState) return <TaskListController />;
+		if (!isValideState) return <TaskListView />;
 		return <TaskDetailController />;
 	}, [isValideState]);
 

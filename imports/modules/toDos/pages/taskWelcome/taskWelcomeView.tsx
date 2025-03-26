@@ -16,8 +16,9 @@ import DeleteDialog from '/imports/ui/appComponents/showDialog/custom/deleteDial
 import { TaskDetailControllerContext } from '../taskDetail/taskDetailContoller';
 import { SysTabs } from '/imports/ui/components/sysTabs/sysTabs';
 import FormDialog from '/imports/ui/appComponents/showDialog/custom/formDialog/formDialog';
+import { TaskWelcomeControllerContext } from './taskWelcomeController';
 const TaskWelcomeView = () => {
-	const controller = useContext(TaskListControllerContext);
+	const controller = useContext(TaskWelcomeControllerContext);
 
 	const sysLayoutContext = useContext<IAppLayoutContext>(AppLayoutContext);
 	const navigate = useNavigate();
@@ -36,17 +37,6 @@ const TaskWelcomeView = () => {
 
 	const [open, setOpen] = useState(false);
 
-	// Dados de exemplo para exibição
-	const formData = {
-		name: 'John Doe',
-		email: 'john.doe@example.com'
-	};
-
-	// Função para abrir o diálogo
-	const handleOpenDialog = () => setOpen(true);
-
-	// Função para fechar o diálogo
-	const handleCloseDialog = () => setOpen(false);
 	return (
 		<Container>
 			<SysTabs
@@ -74,7 +64,7 @@ const TaskWelcomeView = () => {
 			) : (
 				<Box sx={{ width: '100%' }}>
 					<ListTaskView
-						taskList={controller.tasksNaoConcluidas}
+						taskList={controller.tasks}
 						title="Não Concluídas"
 						onEdit={(row) => navigate('/tasks/edit/' + row._id)}
 						onDeleteClick={(row) => {
@@ -95,7 +85,7 @@ const TaskWelcomeView = () => {
 						onCheckTask={controller.onCheckTask}
 					/>
 					<ListTaskView
-						taskList={controller.tasksConcluidas}
+						taskList={controller.tasks}
 						title="Concluídas"
 						onEdit={(row) => navigate('/tasks/edit/' + row._id)}
 						onDeleteClick={(row) => {

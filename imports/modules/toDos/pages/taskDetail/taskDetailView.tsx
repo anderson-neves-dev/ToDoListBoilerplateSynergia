@@ -47,7 +47,7 @@ const TaskDetailView = () => {
 				<Body>
 					<FormColumn>
 						<SysTextField name={'title'} placeholder={'Ex.: Tarefa de Casa'} />
-						<SysTextField name={'description'} placeholder={'Ex.: Assunto para a prova'} />
+						<SysTextField name={'description'} placeholder={'Ex.: Assunto para a prova'} max={200} />
 						<SysSelectField name={'type'} placeholder={'Selecionar'} />
 					</FormColumn>
 				</Body>

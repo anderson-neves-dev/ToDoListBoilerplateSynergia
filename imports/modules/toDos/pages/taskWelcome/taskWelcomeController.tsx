@@ -8,6 +8,7 @@ import { taskApi } from '../../api/taskApi';
 import TaskListView from './taskWelcomeView';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 import { IMeteorError } from '/imports/typings/IMeteorError';
+import TaskWelcomeView from './taskWelcomeView';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -16,11 +17,10 @@ interface IInitialConfig {
 	viewComplexTable: boolean;
 }
 
-interface ITaskListContollerContext {
+interface ITaskWelcomeContollerContext {
 	onAddButtonClick: () => void;
 	onDeleteButtonClick: (row: any) => void;
-	tasksConcluidas: ITask[];
-	tasksNaoConcluidas: ITask[];
+	tasks: ITask[];
 	schema: ISchema<any>;
 	loading: boolean;
 	onChangeTextField: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -29,8 +29,8 @@ interface ITaskListContollerContext {
 	onCheckTask: (doc: ITask) => void;
 }
 
-export const TaskListControllerContext = React.createContext<ITaskListContollerContext>(
-	{} as ITaskListContollerContext
+export const TaskWelcomeControllerContext = React.createContext<ITaskWelcomeContollerContext>(
+	{} as ITaskWelcomeContollerContext
 );
 
 const initialConfig = {
@@ -54,7 +54,7 @@ const TaskWelcomeController = () => {
 	};
 
 	const { loading, tasks } = useTracker(() => {
-		const subHandle = taskApi.subscribe('taskList', filter, {
+		const subHandle = taskApi.subscribe('taskWelcome', filter, {
 			sort
 		});
 		const tasks = subHandle?.ready() ? taskApi.find({ ...filter, check: true }, { sort }).fetch() : [];
@@ -135,12 +135,11 @@ const TaskWelcomeController = () => {
 		});
 	}, []);
 
-	const providerValues: ITaskListContollerContext = useMemo(
+	const providerValues: ITaskWelcomeContollerContext = useMemo(
 		() => ({
 			onAddButtonClick,
 			onDeleteButtonClick,
-			tasksConcluidas,
-			tasksNaoConcluidas,
+			tasks,
 			schema: taskSchReduzido,
 			loading,
 			onChangeTextField,
@@ -148,13 +147,13 @@ const TaskWelcomeController = () => {
 			onAddItemClick,
 			onCheckTask
 		}),
-		[tasksConcluidas, loading]
+		[tasks, loading]
 	);
 
 	return (
-		<TaskListControllerContext.Provider value={providerValues}>
-			<TaskListView />
-		</TaskListControllerContext.Provider>
+		<TaskWelcomeControllerContext.Provider value={providerValues}>
+			<TaskWelcomeView />
+		</TaskWelcomeControllerContext.Provider>
 	);
 };
 

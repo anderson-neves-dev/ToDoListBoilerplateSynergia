@@ -20,5 +20,11 @@ export const taskRounterList: (IRoute | null)[] = [
 		component: taskContainer,
 		isProtected: true,
 		resources: [Recurso.TASK_VIEW]
+	},
+	{
+		path: '/tasks/',
+		component: taskContainer,
+		isProtected: true,
+		resources: [Recurso.TASK_VIEW]
 	}
 ];

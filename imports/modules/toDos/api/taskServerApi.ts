@@ -1,8 +1,10 @@
 // region Imports
+import { IUserProfile } from '../../userprofile/api/userProfileSch';
 import { Recurso } from '../config/recursos';
 import { ITask, taskSch } from './taskSch';
 import { ProductServerBase } from '/imports/api/productServerBase';
 import { IContext } from '/imports/typings/IContext';
+import { userprofileServerApi } from '../../../modules/userprofile/api/userProfileServerApi';
 
 // endregion
 
@@ -11,12 +13,31 @@ class TaskServerApi extends ProductServerBase<ITask> {
 		super('task', taskSch, { resources: Recurso });
 
 		const self = this;
+		this.addTransformedPublication(
+			'taskList',
+			async (filter = {}) => {
+				return this.defaultListCollectionPublication(filter, {
+					projection: { title: 1, description: 1, type: 1, createAt: 1, check: 1, createdby: 1 } // Add `createdby` field
+				});
+			},
+			async (doc: Partial<ITask>): Promise<Partial<ITask & { username: string }>> => {
+				if (!doc.createdby) {
+					console.error('ERROR: campo createdby está faltando no documento:', doc);
+					return { ...doc, username: 'Indefinido' };
+				}
 
-		this.addPublication('taskList', (filter = {}) => {
-			return this.defaultListCollectionPublication(filter, {
-				projection: { title: 1, description: 1, type: 1, createAt: 1, check: 1 }
-			});
-		});
+				const user: IUserProfile = await userprofileServerApi.getCollectionInstance().findOneAsync(
+					{
+						_id: doc.createdby
+					},
+					{
+						fields: { username: 1 }
+					}
+				);
+
+				return { ...doc, username: user?.username || 'Usuário indefinido' };
+			}
+		);
 
 		this.addPublication('taskDetail', (filter = {}) => {
 			return this.defaultDetailCollectionPublication(filter, {

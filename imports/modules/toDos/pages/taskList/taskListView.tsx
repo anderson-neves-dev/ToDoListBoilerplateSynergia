@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysTextField';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import AppLayoutContext, { IAppLayoutContext } from '/imports/app/appLayoutProvider/appLayoutContext';
-import { TaskListControllerContext } from './taskListController';
+import TaskListController, { TaskListControllerContext } from './taskListController';
 import TaskListStyles from './taskListStyles';
 import { Button, Divider, List, ListItem, ListItemText } from '@mui/material';
 import { ITask } from '../../api/taskSch';
@@ -16,7 +16,8 @@ import DeleteDialog from '/imports/ui/appComponents/showDialog/custom/deleteDial
 import { TaskDetailControllerContext } from '../taskDetail/taskDetailContoller';
 import { SysTabs } from '/imports/ui/components/sysTabs/sysTabs';
 import FormDialog from '/imports/ui/appComponents/showDialog/custom/formDialog/formDialog';
-const TaskListView = () => {
+import { TaskView } from '../../components/takView/TaskView';
+const App = () => {
 	const controller = useContext(TaskListControllerContext);
 	const sysLayoutContext = useContext<IAppLayoutContext>(AppLayoutContext);
 	const navigate = useNavigate();
@@ -82,10 +83,21 @@ const TaskListView = () => {
 						}}
 						onVisualizarTask={(row) => {
 							sysLayoutContext.showModal({
-								title: 'opa',
-								onClose: () => setOpen((open) => !open),
+								onClose: () => {
+									setOpen((open) => !open);
+									sysLayoutContext.closeModal();
+								},
 								open: open,
-								body: <div>{row.title}</div>
+								body: (
+									<TaskView
+										onCheckTask={controller.onCheckTask}
+										task={row}
+										onEdit={(row) => {
+											navigate('/tasks/edit/' + row._id);
+											sysLayoutContext.closeModal();
+										}}
+									/>
+								)
 							});
 						}}
 						onCheckTask={controller.onCheckTask}
@@ -109,9 +121,27 @@ const TaskListView = () => {
 								}
 							});
 						}}
+						onVisualizarTask={(row) => {
+							sysLayoutContext.showModal({
+								onClose: () => {
+									setOpen((open) => !open);
+									sysLayoutContext.closeModal();
+								},
+								open: open,
+								body: (
+									<TaskView
+										onCheckTask={controller.onCheckTask}
+										task={row}
+										onEdit={(row) => {
+											navigate('/tasks/edit/' + row._id);
+											sysLayoutContext.closeModal();
+										}}
+									/>
+								)
+							});
+						}}
 						onCheckTask={controller.onCheckTask}
 					/>
-					<Button onClick={() => sysLayoutContext.showDialog}>sss</Button>
 				</Box>
 			)}
 			<SysFab
@@ -124,5 +154,10 @@ const TaskListView = () => {
 		</Container>
 	);
 };
-
-export default TaskListView;
+export function TaskListView() {
+	return (
+		<TaskListController>
+			<App />
+		</TaskListController>
+	);
+}

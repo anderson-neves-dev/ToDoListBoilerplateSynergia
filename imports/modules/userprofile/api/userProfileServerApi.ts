@@ -350,13 +350,13 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 	}
 
 	async afterInsert(doc: IUserProfileEstendido, _context: IContext) {
-		if (Meteor.isServer) {
-			if (doc.password) {
-				Accounts.sendVerificationEmail(doc._id!);
-			} else {
-				Accounts.sendEnrollmentEmail(doc._id!);
-			}
-		}
+		// if (Meteor.isServer) {
+		// 	if (doc.password) {
+		// 		Accounts.sendVerificationEmail(doc._id!);
+		// 	} else {
+		// 		Accounts.sendEnrollmentEmail(doc._id!);
+		// 	}
+		// }
 	}
 
 	async beforeUpdate(docObj: IUserProfile, context: IContext) {

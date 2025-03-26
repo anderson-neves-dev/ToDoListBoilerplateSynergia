@@ -29,7 +29,7 @@ const SignInPage: React.FC = () => {
 		});
 	};
 
-	const handleForgotPassword = () => navigate('/password-recovery');
+	const handleSingUp = () => navigate('/signup');
 
 	useEffect(() => {
 		if (user) navigate('/');
@@ -63,7 +63,7 @@ const SignInPage: React.FC = () => {
 								endIcon={<SysIcon name={'arrowForward'} />}>
 								Entrar
 							</SysFormButton>
-							<Button variant="text" onClick={handleForgotPassword}>
+							<Button variant="text" onClick={handleSingUp}>
 								<Typography sx={{ display: 'flex', flexDirection: 'row', color: 'white' }}>
 									Novo por aqui? <Typography variant="link">Cadastre-se</Typography>
 								</Typography>

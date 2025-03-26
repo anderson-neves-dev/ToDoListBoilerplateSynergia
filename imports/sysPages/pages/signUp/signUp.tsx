@@ -3,7 +3,7 @@
 
 // login page overrides the form’s submit event and call Meteor’s loginWithPassword()
 // Authentication errors modify the component’s state to be displayed
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavigateFunction } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import TextField from '/imports/ui/components/SimpleFormFields/TextField/TextField';
@@ -14,6 +14,7 @@ import SimpleForm from '/imports/ui/components/SimpleForm/SimpleForm';
 import { signUpStyle } from './signUpStyle';
 import Box from '@mui/material/Box';
 import { IUserProfile } from '/imports/modules/userprofile/api/userProfileSch';
+import AuthContext, { IAuthContext } from '/imports/app/authProvider/authContext';
 
 interface ISignUp {
 	showNotification: (options?: Object) => void;

@@ -34,4 +34,5 @@ export interface ITask extends IDoc {
 	description: string;
 	type: string;
 	check: boolean;
+	username?: string;
 }
