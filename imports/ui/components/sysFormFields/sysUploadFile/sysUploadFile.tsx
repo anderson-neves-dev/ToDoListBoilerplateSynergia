@@ -95,6 +95,7 @@ export const SysUploadFile: React.FC<ISysUploadFile> = ({
 		});
 
 	const { getRootProps, getInputProps } = useDropzone({
+		multiple: false,
 		onDrop: useCallback((acceptedFiles: FileWithPath[], rejectedFiles: any[]) => {
 			acceptedFiles.forEach((file) => {
 				const type = file.type.split('/')[0];
@@ -186,7 +187,7 @@ export const SysUploadFile: React.FC<ISysUploadFile> = ({
 				tooltipMessage={tooltipMessage}
 				tooltipPosition={tooltipPosition}>
 				<Container readOnly={readOnly} sx={sxMap?.container}>
-					{!readOnly && (
+					{!readOnly && files.length === 0 && (
 						<Button {...getRootProps()} disabled={disabled || loading} sx={sxMap?.button}>
 							<input {...getInputProps()} />
 							<TypographyInfo variant="caption">{btnTextDesc}</TypographyInfo>

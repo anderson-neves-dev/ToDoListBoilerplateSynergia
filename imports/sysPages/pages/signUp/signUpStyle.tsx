@@ -1,40 +1,62 @@
-/*!
+import React from 'react';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import { sysSizing } from '../../../ui/materialui/styles';
+import sysLightPalette from '/imports/ui/materialui/sysColors';
 
- =========================================================
- * Material Dashboard React - v1.0.0 based on Material Dashboard - v1.2.0
- =========================================================
+interface ISignUpStyles {
+	Container: React.ElementType;
+	Content: React.ElementType;
+	FormContainer: React.ElementType;
+	FormWrapper: React.ElementType;
+	Header: React.ElementType;
+}
 
- * Product Page: http://www.creative-tim.com/product/material-dashboard-react
- * Copyright 2018 Creative Tim (http://www.creative-tim.com)
- * Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-react/blob/master/LICENSE.md)
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
- */
-
-export const signUpStyle = {
-	containerSignUp: {
+const SignUpStyles: ISignUpStyles = {
+	Container: styled(Box)(({ theme }) => ({
 		width: '100%',
-		maxWidth: 400
-	},
-	labelRegisterSystem: {
-		textAlign: 'center',
+		height: '100vh',
+		backgroundColor: sysLightPalette.common?.black,
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center'
+	})),
+	Header: styled(Box)(({ theme }) => ({
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center'
+	})),
+	Content: styled(Box)(({ theme }) => ({
+		width: '100%',
+		height: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center'
+	})),
+	FormContainer: styled(Paper)(({ theme }) => ({
+		gap: theme.spacing(4),
+
+		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
+		backgroundColor: 'linear-gradient(260deg,#00FFC9 0%, #04C4E8 49%,#069EFC 95%)',
+		boxShadow: `0px 0px 10px 2px ${sysLightPalette.sysAction?.primary}`,
+		borderRadius: '28px',
+		display: 'flex',
+		flexDirection: 'column',
+		textAlign: 'center'
+	})),
+	FormWrapper: styled(Box)(({ theme }) => ({
+		width: '100%',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	imageLogo: {
-		maxWidth: 100
-	},
-	containerButtonOptions: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-around'
-	},
-	containerRouterSignIn: {
-		color: '#444'
-	}
+		alignItems: 'center',
+		gap: theme.spacing(2),
+		color: 'white'
+	}))
 };
+
+export default SignUpStyles;

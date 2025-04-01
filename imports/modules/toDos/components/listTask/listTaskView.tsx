@@ -1,14 +1,15 @@
-import { Button, Checkbox, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Checkbox, List, ListItem, ListItemText, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import React, { useContext, useState } from 'react';
 import { ITask } from '../../api/taskSch';
 import ListTaskStyles from './listTaskStyles';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
-import { sysSizing } from '/imports/ui/materialui/styles';
-import { SysCheckBox } from '/imports/ui/components/sysFormFields/sysCheckBoxField/sysCheckBoxField';
 import AuthContext from '/imports/app/authProvider/authContext';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import sysLightPalette from '/imports/ui/materialui/sysColors';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 
 interface Props {
 	taskList: ITask[];
@@ -20,7 +21,7 @@ interface Props {
 	pageHome?: boolean;
 }
 
-const { Title, ListStyled, Container, IconsDiv, ListStyledFirst } = ListTaskStyles;
+const { Title, ListStyled, Container, IconsDiv, ListStyledFirst, TitleHome, IconWrapper } = ListTaskStyles;
 export function ListTaskView({
 	taskList,
 	title,
@@ -52,16 +53,19 @@ export function ListTaskView({
 											checked={task.check}
 											onChange={(event) => onCheckTask({ ...task, check: event.target.checked })}
 										/>
+										<IconWrapper>{task.check ? <AssignmentTurnedInIcon /> : <AssignmentIcon />}</IconWrapper>
 										<ListItemText
 											primary={task.title}
 											secondary={task.createdby == user?._id ? 'Você' : task.username}
 											primaryTypographyProps={{ sx: { textDecoration: task.check ? 'line-through' : 'none' } }}
 											onClick={onVisualizarTask ? () => onVisualizarTask(task) : () => {}}
 										/>
-										<IconsDiv>
-											<SysIcon name={'edit'} onClick={() => onEdit(task)} />
-											<SysIcon name={'delete'} onClick={() => onDeleteClick(task)} />
-										</IconsDiv>
+										{user?._id == task.createdby && (
+											<IconsDiv>
+												<SysIcon name={'edit'} onClick={() => onEdit(task)} />
+												<SysIcon name={'delete'} onClick={() => onDeleteClick(task)} />
+											</IconsDiv>
+										)}
 									</ListItem>
 								</ListStyled>
 							))}
@@ -69,24 +73,30 @@ export function ListTaskView({
 							taskList.map((task: ITask, index: number) =>
 								index == 0 ? (
 									<ListStyledFirst>
-										<Typography sx={{ width: '40%', textAlign: 'left' }} variant="h5">{`${title}`}</Typography>
-
-										<ListStyled sx={{ borderTop: `1px solid black`, height: '8vh' }}>
+										<Typography component={TitleHome} variant="h5">
+											{title}
+										</Typography>
+										<ListStyled sx={{ borderTop: `1px solid ${sysLightPalette.divider}`, height: '8vh' }}>
 											<ListItem key={index} sx={{ padding: '0px' }}>
 												<Checkbox
 													checked={task.check}
 													onChange={(event) => onCheckTask({ ...task, check: event.target.checked })}
 												/>
+
+												<IconWrapper>{task.check ? <AssignmentTurnedInIcon /> : <AssignmentIcon />}</IconWrapper>
+
 												<ListItemText
 													primary={task.title}
 													secondary={task.createdby == user?._id ? 'Você' : task.username}
 													primaryTypographyProps={{ sx: { textDecoration: task.check ? 'line-through' : 'none' } }}
 													onClick={onVisualizarTask ? () => onVisualizarTask(task) : () => {}}
 												/>
-												<IconsDiv>
-													<SysIcon name={'edit'} onClick={() => onEdit(task)} />
-													<SysIcon name={'delete'} onClick={() => onDeleteClick(task)} />
-												</IconsDiv>
+												{user?._id == task.createdby && (
+													<IconsDiv>
+														<SysIcon name={'edit'} onClick={() => onEdit(task)} />
+														<SysIcon name={'delete'} onClick={() => onDeleteClick(task)} />
+													</IconsDiv>
+												)}
 											</ListItem>
 										</ListStyled>
 									</ListStyledFirst>
@@ -97,16 +107,20 @@ export function ListTaskView({
 												checked={task.check}
 												onChange={(event) => onCheckTask({ ...task, check: event.target.checked })}
 											/>
+											<IconWrapper>{task.check ? <AssignmentTurnedInIcon /> : <AssignmentIcon />}</IconWrapper>
+
 											<ListItemText
 												primary={task.title}
 												secondary={task.createdby == user?._id ? 'Você' : task.username}
 												primaryTypographyProps={{ sx: { textDecoration: task.check ? 'line-through' : 'none' } }}
 												onClick={onVisualizarTask ? () => onVisualizarTask(task) : () => {}}
 											/>
-											<IconsDiv>
-												<SysIcon name={'edit'} onClick={() => onEdit(task)} />
-												<SysIcon name={'delete'} onClick={() => onDeleteClick(task)} />
-											</IconsDiv>
+											{user?._id == task.createdby && (
+												<IconsDiv>
+													<SysIcon name={'edit'} onClick={() => onEdit(task)} />
+													<SysIcon name={'delete'} onClick={() => onDeleteClick(task)} />
+												</IconsDiv>
+											)}
 										</ListItem>
 									</ListStyled>
 								)

@@ -1,6 +1,5 @@
 import { IDoc } from '/imports/typings/IDoc';
 import { ISchema } from '/imports/typings/ISchema';
-import { hasValue } from '/imports/libs/hasValue';
 
 export const taskSch: ISchema<ITask> = {
 	title: {

@@ -11,13 +11,12 @@ import { userprofileServerApi } from '../../../modules/userprofile/api/userProfi
 class TaskServerApi extends ProductServerBase<ITask> {
 	constructor() {
 		super('task', taskSch, { resources: Recurso });
-
 		const self = this;
 		this.addTransformedPublication(
 			'taskList',
 			async (filter = {}) => {
 				return this.defaultListCollectionPublication(filter, {
-					projection: { title: 1, description: 1, type: 1, createAt: 1, check: 1, createdby: 1 } // Add `createdby` field
+					projection: { title: 1, description: 1, type: 1, createdat: 1, check: 1, createdby: 1 } // Add `createdby` field
 				});
 			},
 			async (doc: Partial<ITask>): Promise<Partial<ITask & { username: string }>> => {

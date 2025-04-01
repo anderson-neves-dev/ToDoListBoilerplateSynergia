@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext } from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import { ISchema } from '/imports/typings/ISchema';
@@ -8,7 +8,6 @@ import { ITask } from '../../api/taskSch';
 import { TaskModuleContext } from '../../taskContainer';
 import { taskApi } from '../../api/taskApi';
 import TaskDetailView from './taskDetailView';
-import TaskListView from '../taskList/taskListView';
 
 interface ITaskDetailContollerContext {
 	closePage: () => void;

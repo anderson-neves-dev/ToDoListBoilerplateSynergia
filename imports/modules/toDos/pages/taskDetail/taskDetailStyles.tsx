@@ -14,7 +14,7 @@ interface ITaskDetailStyles {
 }
 
 const TaskDetailStyles: ITaskDetailStyles = {
-	Container: styled(SysSectionPaddingXY)(() => ({
+	Container: styled(SysSectionPaddingXY)(({ theme }) => ({
 		width: '100%',
 		height: '100vh',
 		flex: 1,
@@ -24,13 +24,18 @@ const TaskDetailStyles: ITaskDetailStyles = {
 		alignItems: 'center',
 		gap: sysSizing.spacingFixedLg
 	})),
-	Header: styled(Box)({
+	Header: styled(Box)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		width: '60%'
-	}),
+		width: '60%',
+		[theme.breakpoints.down('md')]: {
+			width: '100%',
+			paddingLeft: sysSizing.spacingFixedMd,
+			paddingRight: sysSizing.spacingFixedMd
+		}
+	})),
 	Body: styled(Box)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'row',
@@ -40,7 +45,10 @@ const TaskDetailStyles: ITaskDetailStyles = {
 		gap: '64px',
 		[theme.breakpoints.down('md')]: {
 			flexDirection: 'column-reverse',
-			gap: sysSizing.spacingFixedMd
+			gap: sysSizing.spacingFixedMd,
+			width: '100%',
+			paddingLeft: sysSizing.spacingFixedMd,
+			paddingRight: sysSizing.spacingFixedMd
 		}
 	})),
 	Footer: styled(Box)({

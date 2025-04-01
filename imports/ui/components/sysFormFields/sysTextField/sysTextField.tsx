@@ -131,13 +131,25 @@ const SysTextField: React.FC<ISysTextFieldProps> = ({
 			disabled={disabled}
 			showTooltip={showTooltip}
 			tooltipMessage={tooltipMessage}
-			tooltipPosition={tooltipPosition}>
+			tooltipPosition={tooltipPosition}
+			sx={{ backgroundColor: 'red' }}>
 			<TextField
 				{...otherProps}
 				name={name}
 				id={name}
 				key={name}
-				sx={sxMap?.textField}
+				sx={{
+					'.MuiTextField-root': {
+						backgroundColor: 'red',
+						borderRadius: '8px'
+					},
+					'.MuiOutlinedInput-notchedOutline': {
+						borderColor: 'blue' // Borda azul
+					},
+					'&:hover': {
+						backgroundColor: 'blue'
+					}
+				}}
 				value={valueState || ''}
 				onChange={onFieldChange}
 				error={!!errorState}

@@ -10,16 +10,24 @@ interface ISignInStyles {
 	Content: React.ElementType;
 	FormContainer: React.ElementType;
 	FormWrapper: React.ElementType;
+	Header: React.ElementType;
 }
 
 const SignInStyles: ISignInStyles = {
 	Container: styled(Box)(({ theme }) => ({
 		width: '100%',
 		height: '100vh',
-		backgroundColor: sysLightPalette.primary?.main,
+		backgroundColor: sysLightPalette.common?.black,
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center'
+	})),
+	Header: styled(Box)(({ theme }) => ({
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center'
 	})),
 	Content: styled(Box)(({ theme }) => ({
 		width: '100%',
@@ -33,8 +41,8 @@ const SignInStyles: ISignInStyles = {
 		gap: theme.spacing(4),
 
 		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
-		background: 'linear-gradient(260deg,#00FFC9 0%, #04C4E8 49%,#069EFC 95%)',
-		boxShadow: '10px 8px 20px 5px rgba(0, 0, 0, 0.25)',
+		backgroundColor: 'linear-gradient(260deg,#00FFC9 0%, #04C4E8 49%,#069EFC 95%)',
+		boxShadow: `0px 0px 10px 2px ${sysLightPalette.sysAction?.primary}`,
 		borderRadius: '28px',
 		display: 'flex',
 		flexDirection: 'column',

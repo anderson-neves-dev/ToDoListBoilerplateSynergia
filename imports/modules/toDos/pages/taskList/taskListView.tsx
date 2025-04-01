@@ -9,19 +9,16 @@ import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import AppLayoutContext, { IAppLayoutContext } from '/imports/app/appLayoutProvider/appLayoutContext';
 import TaskListController, { TaskListControllerContext } from './taskListController';
 import TaskListStyles from './taskListStyles';
-import { Button, Divider, List, ListItem, ListItemText } from '@mui/material';
-import { ITask } from '../../api/taskSch';
 import { ListTaskView } from '../../components/listTask/listTaskView';
 import DeleteDialog from '/imports/ui/appComponents/showDialog/custom/deleteDialog/deleteDialog';
-import { TaskDetailControllerContext } from '../taskDetail/taskDetailContoller';
 import { SysTabs } from '/imports/ui/components/sysTabs/sysTabs';
-import FormDialog from '/imports/ui/appComponents/showDialog/custom/formDialog/formDialog';
 import { TaskView } from '../../components/takView/TaskView';
+
 const App = () => {
 	const controller = useContext(TaskListControllerContext);
 	const sysLayoutContext = useContext<IAppLayoutContext>(AppLayoutContext);
 	const navigate = useNavigate();
-	const { Container, LoadingContainer, SearchContainer, ListStyled } = TaskListStyles;
+	const { Container, LoadingContainer, SearchContainer, TabsBorder } = TaskListStyles;
 	const abas = [
 		{
 			label: 'Minhas Tarefas',
@@ -38,20 +35,23 @@ const App = () => {
 
 	return (
 		<Container>
-			<SysTabs
-				abas={abas}
-				value={selectedTab}
-				handleChange={(event, newValue) => {
-					setSelectedTab(newValue);
-					controller.onChangeCategory(newValue);
-				}}
-			/>
+			<TabsBorder>
+				<SysTabs
+					abas={abas}
+					value={selectedTab}
+					handleChange={(event, newValue) => {
+						setSelectedTab(newValue);
+						controller.onChangeCategory(newValue);
+					}}
+				/>
+			</TabsBorder>
 			<SearchContainer>
 				<SysTextField
 					name="search"
-					placeholder="Pesquisar por nome"
+					placeholder="Pesquisar por título"
 					onChange={controller.onChangeTextField}
 					startAdornment={<SysIcon name={'search'} />}
+					sxMap={{ textField: { ':hover': { backgroundColor: 'red' } } }}
 				/>
 			</SearchContainer>
 			{/* <Button onClick={controller.onAddItemClick}>Adicionar</Button> */}

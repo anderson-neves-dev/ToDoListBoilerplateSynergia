@@ -3,12 +3,14 @@ import { styled } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 import { sysSizing } from '/imports/ui/materialui/styles';
 import { SysSectionPaddingXY } from '/imports/ui/layoutComponents/sysLayoutComponents';
+import sysLightPalette from '/imports/ui/materialui/sysColors';
 
 interface ITaskListStyles {
 	Container: ElementType<BoxProps>;
 	LoadingContainer: ElementType<BoxProps>;
 	SearchContainer: ElementType<BoxProps>;
 	ListStyled: ElementType<BoxProps>;
+	TabsBorder: ElementType<BoxProps>;
 }
 
 const TaskListStyles: ITaskListStyles = {
@@ -44,7 +46,12 @@ const TaskListStyles: ITaskListStyles = {
 	})),
 	ListStyled: styled(Box)(({ theme }) => ({
 		width: '100%',
-		borderBottom: '1px solid black' // ✅ Também está correto
+		borderBottom: '1px solid black'
+	})),
+	TabsBorder: styled(Box)(({ theme }) => ({
+		width: '100%',
+		borderBottom: '0.5px solid',
+		borderColor: sysLightPalette.sysAction?.primary
 	}))
 };
 

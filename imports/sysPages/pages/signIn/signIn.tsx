@@ -11,12 +11,14 @@ import Button from '@mui/material/Button';
 import SysIcon from '../../../ui/components/sysIcon/sysIcon';
 import AuthContext, { IAuthContext } from '/imports/app/authProvider/authContext';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
+import sysLightPalette from '/imports/ui/materialui/sysColors';
+import { LogoSynergia } from '/imports/ui/logoSynergia';
 
 const SignInPage: React.FC = () => {
 	const { showNotification } = useContext(AppLayoutContext);
 	const { user, signIn } = useContext<IAuthContext>(AuthContext);
 	const navigate = useNavigate();
-	const { Container, Content, FormContainer, FormWrapper } = SignInStyles;
+	const { Container, Content, FormContainer, FormWrapper, Header } = SignInStyles;
 
 	const handleSubmit = ({ email, password }: { email: string; password: string }) => {
 		signIn(email, password, (err) => {
@@ -39,10 +41,12 @@ const SignInPage: React.FC = () => {
 		<Container>
 			<Content>
 				<FormContainer>
-					<Box component="img" src="/images/wireframe/synergia-logo.svg" sx={{ width: '100%', maxWidth: '400px' }} />
-					<Typography variant="h3" sx={{ color: 'white' }}>
-						Realize o login
-					</Typography>
+					<Header>
+						<LogoSynergia />
+						<Typography variant="h3" sx={{ color: sysLightPalette.sysAction?.primary }}>
+							Realize o login
+						</Typography>
+					</Header>
 					<SysForm schema={signInSchema} onSubmit={handleSubmit} debugAlerts={false}>
 						<FormWrapper>
 							<SysTextField
@@ -64,8 +68,11 @@ const SignInPage: React.FC = () => {
 								Entrar
 							</SysFormButton>
 							<Button variant="text" onClick={handleSingUp}>
-								<Typography sx={{ display: 'flex', flexDirection: 'row', color: 'white' }}>
-									Novo por aqui? <Typography variant="link">Cadastre-se</Typography>
+								<Typography sx={{ display: 'flex', gap: '5px', flexDirection: 'row', color: 'white' }}>
+									Novo por aqui?{' '}
+									<Typography color="primary" variant="link">
+										Cadastre-se
+									</Typography>
 								</Typography>
 							</Button>
 						</FormWrapper>

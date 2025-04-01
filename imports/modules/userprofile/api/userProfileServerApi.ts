@@ -218,6 +218,7 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 						{ _id: dataObj._id || insertId },
 						{
 							$set: {
+								'emails.0.verified': true,
 								profile: {
 									name: dataObj.username,
 									email: dataObj.email

@@ -7,8 +7,7 @@ import { ITask } from '../../api/taskSch';
 import { taskApi } from '../../api/taskApi';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 import { IMeteorError } from '/imports/typings/IMeteorError';
-import Home from '/imports/sysPages/pages/home/home';
-import { orderBy } from 'lodash';
+import AuthContext from '/imports/app/authProvider/authContext';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -37,7 +36,7 @@ export const TaskListControllerContext = React.createContext<ITaskListContollerC
 );
 
 const initialConfig = {
-	sortProperties: { field: 'createdat', sortAscending: true },
+	sortProperties: { field: 'createdat', sortAscending: false },
 	filter: { type: 'private' },
 	searchBy: null,
 	viewComplexTable: false
@@ -50,15 +49,18 @@ interface TaskListControllerProps {
 const TaskListController: React.FC<TaskListControllerProps> = ({ children }) => {
 	const [config, setConfig] = React.useState<IInitialConfig>(initialConfig);
 	const { showNotification } = useContext(AppLayoutContext);
-
+	const { user } = useContext(AuthContext);
+	console.log({ user });
 	const { title, description, type } = taskApi.getSchema();
 	const taskSchReduzido = { title, description, type };
 	const navigate = useNavigate();
 
-	const { sortProperties, filter } = config;
+	let { sortProperties, filter } = config;
+	filter = { ...filter, $or: [{ type: 'public' }, { createdby: user?._id }] };
 	const sort = {
 		[sortProperties.field]: sortProperties.sortAscending ? 1 : -1
 	};
+	console.log({ sort });
 
 	const { loading, tasksConcluidas, tasksNaoConcluidas } = useTracker(() => {
 		const subHandle = taskApi.subscribe('taskList', filter, {

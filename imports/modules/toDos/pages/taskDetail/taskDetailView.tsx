@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import TaskDetailStyles from './taskDetailStyles';
 import SysForm from '/imports/ui/components/sysForm/sysForm';
@@ -7,10 +7,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
-import { SysCheckBox } from '/imports/ui/components/sysFormFields/sysCheckBoxField/sysCheckBoxField';
 import SysFormButton from '/imports/ui/components/sysFormFields/sysFormButton/sysFormButton';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
-import { SysDatePickerField } from '/imports/ui/components/sysFormFields/sysDatePickerField/sysDatePickerField';
 import { TaskDetailControllerContext } from './taskDetailContoller';
 import { TaskModuleContext } from '../../taskContainer';
 
@@ -21,7 +19,6 @@ const TaskDetailView = () => {
 	const isEdit = state === 'edit';
 	const isCreate = state === 'create';
 	const { Container, Body, Header, Footer, FormColumn, Image } = TaskDetailStyles;
-
 	return (
 		<Container>
 			<Header>
@@ -46,8 +43,14 @@ const TaskDetailView = () => {
 				loading={controller.loading}>
 				<Body>
 					<FormColumn>
-						<SysTextField name={'title'} placeholder={'Ex.: Tarefa de Casa'} />
-						<SysTextField name={'description'} placeholder={'Ex.: Assunto para a prova'} max={200} />
+						<SysTextField name={'title'} placeholder={'Ex.: Tarefa de Casa'} max={30} />
+						<SysTextField
+							multiline
+							rows={6}
+							name={'description'}
+							placeholder={'Ex.: Assunto para a prova'}
+							max={1000}
+						/>
 						<SysSelectField name={'type'} placeholder={'Selecionar'} />
 					</FormColumn>
 				</Body>
